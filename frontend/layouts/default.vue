@@ -70,13 +70,13 @@
     </header>
     <Nuxt />
     <footer>
-      <nav
-        class="flex items-center justify-between flex-wrap bg-teal-500 p-6 mt-12"
-      >
-        <div class="flex flex-shrink-0 text-white mr-6 text-center">
-          <p>Copyright ©カラーズ（仮称）, All rights reserved.</p>
+      <div class="flex items-center flex-wrap bg-teal-500 p-6 mt-12">
+        <div class="flex flex-shrink-0 text-white mx-auto">
+          <p>
+            Copyright ©カラーズ（仮称）, All rights reserved.
+          </p>
         </div>
-      </nav>
+      </div>
     </footer>
   </div>
 </template>
