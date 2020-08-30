@@ -47,11 +47,12 @@
     </div>
 
     <div class="text-center">
-      <button
+      <nuxt-link
+        to="/signup"
         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
       >
         アカウント作成
-      </button>
+      </nuxt-link>
     </div>
   </div>
 </template>
