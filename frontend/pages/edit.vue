@@ -4,12 +4,28 @@
     <div class="w-full max-w-lg mx-auto">
       <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <div class="mb-4">
-          <div class="text-center mb-5">
+          <div class="text-center mb-5 relative">
             <img
               src="/images/default.jpeg"
               class="rounded-full mx-auto w-32"
               alt="ユーザ画像"
             />
+            <div class="absolute profile-icon-pile">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                class="w-16 h-16 text-gray-200"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                />
+              </svg>
+            </div>
           </div>
 
           <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
@@ -98,4 +114,12 @@
 export default {}
 </script>
 
-<style></style>
+<style>
+.profile-icon-pile {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
+</style>
