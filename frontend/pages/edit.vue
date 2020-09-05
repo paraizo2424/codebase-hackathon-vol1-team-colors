@@ -27,9 +27,9 @@
                   />
                 </svg>
                 <input
+                  id="profile-image"
                   type="file"
                   name="profile-image"
-                  id="profile-image"
                   class="hidden"
                 />
               </label>

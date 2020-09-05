@@ -37,7 +37,7 @@
             </button>
           </div>
           <div
-            v-show="isNavActive"
+            v-show="isNavActive || isDevice"
             class="w-full block flex-grow lg:flex lg:items-center lg:w-auto"
           >
             <div class="text-sm lg:flex-grow">
@@ -86,6 +86,13 @@ export default {
   data: () => {
     return {
       isNavActive: false,
+      isDevice: false,
+    }
+  },
+  mounted() {
+    const windowSize = window.innerWidth
+    if (windowSize >= 1000) {
+      this.isDevice = true
     }
   },
   methods: {
