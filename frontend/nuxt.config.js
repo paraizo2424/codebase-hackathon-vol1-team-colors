@@ -24,7 +24,13 @@ export default {
         content: process.env.npm_package_description || '',
       },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    link: [
+      {
+        rel: 'stylesheet',
+        href:
+          'https://cdn.jsdelivr.net/gh/devicons/devicon@master/devicon.min.css',
+      },
+    ],
   },
   /*
    ** Global CSS
