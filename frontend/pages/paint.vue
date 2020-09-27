@@ -3,12 +3,14 @@
     <div class="flex mb-4">
       <div class="w-3/5">
         <div class="border-solid border-4">
-          <canvas
-            id="myCanvas"
-            width="800px"
-            height="2000px"
-            @mousedown="draw"
-          ></canvas>
+          <div class="flex flex-wrap">
+            <div
+              v-for="i in 144"
+              :key="i"
+              :id="i"
+              class="w-1/6 border-solid border-4 h-24"
+            ></div>
+          </div>
         </div>
         <div class="text-center">
           <p>&lt;&lt; 1 2 3 4 5</p>
@@ -165,48 +167,5 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      canvasMode: 'pen',
-      canvas: null,
-      context: null,
-      isDrag: false,
-    }
-  },
-  mounted() {
-    this.canvas = document.querySelector('#myCanvas')
-    this.context = this.canvas.getContext('2d')
-    this.context.lineCap = 'round'
-    this.context.lineJoin = 'round'
-    this.context.lineWidth = 3
-    this.context.strokeStyle = '#000000'
-
-    const initialPosition = 25
-    const squaerSize = 50
-    const space = 25
-
-    for (let x = 0; x < 6; x++) {
-      for (let y = 0; y < 24; y++) {
-        this.context.strokeRect(
-          initialPosition + x * squaerSize + x * space,
-          initialPosition + y * squaerSize + y * space,
-          squaerSize,
-          squaerSize
-        )
-      }
-    }
-  },
-  methods: {
-    // 描画
-    draw(e) {
-      // クリックした場所の座標
-      // const x = e.layerX
-      // const y = e.layerY
-    },
-  },
-}
-</script>
-
+<script></script>
 <style></style>
