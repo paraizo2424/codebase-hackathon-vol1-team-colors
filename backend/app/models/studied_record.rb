@@ -1,0 +1,2 @@
+class StudiedRecord < ApplicationRecord
+end
