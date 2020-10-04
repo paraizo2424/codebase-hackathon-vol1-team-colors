@@ -48,20 +48,15 @@ ActiveRecord::Schema.define(version: 2020_09_27_084146) do
     t.datetime "reset_password_sent_at"
     t.boolean "allow_password_change", default: false
     t.datetime "remember_created_at"
-    t.integer "sign_in_count", default: 0, null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string "current_sign_in_ip"
-    t.string "last_sign_in_ip"
     t.string "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email"
-    t.string "name", null: false
+    t.string "name"
     t.date "birthday"
     t.string "image"
-    t.string "email", null: false
-    t.text "note"
+    t.string "email"
+    t.string "text"
     t.json "tokens"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
