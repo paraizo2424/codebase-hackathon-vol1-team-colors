@@ -1,16 +1,9 @@
 <template>
-  <div class="container mx-auto">
+  <div id="app" class="container mx-auto">
     <div class="flex mb-4">
       <div class="w-3/5">
         <div class="border-solid border-4">
-          <div class="flex flex-wrap">
-            <div
-              v-for="i in 144"
-              :key="i"
-              :id="i"
-              class="w-1/6 border-solid border-4 h-24"
-            ></div>
-          </div>
+          <PaintArea />
         </div>
         <div class="text-center">
           <p>&lt;&lt; 1 2 3 4 5</p>
@@ -167,5 +160,14 @@
   </div>
 </template>
 
-<script></script>
+<script>
+import PaintArea from '~/components/PaintArea'
+
+export default {
+  name: 'app',
+  components: {
+    PaintArea,
+  },
+}
+</script>
 <style></style>
