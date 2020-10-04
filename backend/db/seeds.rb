@@ -1,9 +1,19 @@
+User.create!(
+       name: "忍者",
+       email: "sample@sample.com",
+       birthday: Faker::Date.birthday(min_age: 12, max_age: 80),
+       password: "password",
+       password_confirmation: "password",
+       note: "あああああ"
+     )
+
 10.times do
     User.create!(
        name: Faker::JapaneseMedia::DragonBall.character,
        email: Faker::Internet.email,
        birthday: Faker::Date.birthday(min_age: 12, max_age: 80),
-       password: Faker::Crypto.sha256,
+       password: "password",
+       password_confirmation: "password",
        note: "あああああ"
      )
 end
@@ -12,8 +22,8 @@ subjects = ["HTML5", "CSS3", "JavaScript", "Ruby", "Sinatra", "Ruby on Rails", "
 colors = ["Orange", "Blue", "Yellow", "Red", "Gray", "#3366ff", "Green"]
 subjects.zip(colors) do |subject, color|
     Subject.create!(
-        name: subject, 
-        color: color 
+        name: subject,
+        color: color
     )
 end
 

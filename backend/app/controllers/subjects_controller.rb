@@ -1,11 +1,27 @@
 class SubjectsController < ApplicationController
   before_action :set_subject, only: [:show, :update, :destroy]
+  before_action :authenticate_user!
 
   # GET /subjects
   def index
     @subjects = Subject.all
 
-    render json: @subjects
+    @aggregate = {}
+    @subjects.each do |subject|
+      subject_records = subject.studied_records.where(user_id: current_user.id)
+      @aggregate[subject.name.to_sym] = 0
+
+      subject_records.each do |subject_record|
+        @aggregate[subject.name.to_sym] += subject_record.square_count
+      end
+    end
+
+    @time ={}
+    @aggregate.each do |key, value|
+      @time[key] = {hour: value / 6, mimute: value %6}
+    end
+
+    render json: @time
   end
 
   # GET /subjects/1
