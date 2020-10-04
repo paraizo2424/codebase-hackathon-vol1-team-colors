@@ -25,11 +25,7 @@ ActiveRecord::Schema.define(version: 2020_09_27_084146) do
   create_table "studied_records", force: :cascade do |t|
     t.integer "user_id"
     t.date "date"
-<<<<<<< HEAD
     t.integer "studied_type"
-=======
-    t.integer "type"
->>>>>>> f32ddf9... サインアップ、サインイン実装
     t.integer "square_count"
     t.text "note"
     t.datetime "created_at", precision: 6, null: false
@@ -52,29 +48,19 @@ ActiveRecord::Schema.define(version: 2020_09_27_084146) do
     t.datetime "reset_password_sent_at"
     t.boolean "allow_password_change", default: false
     t.datetime "remember_created_at"
-<<<<<<< HEAD
-=======
     t.integer "sign_in_count", default: 0, null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string "current_sign_in_ip"
     t.string "last_sign_in_ip"
->>>>>>> f32ddf9... サインアップ、サインイン実装
     t.string "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email"
-<<<<<<< HEAD
-    t.string "name"
-    t.date "birthday"
-    t.string "image"
-    t.string "email"
-=======
     t.string "name", null: false
     t.date "birthday"
     t.string "image"
     t.string "email", null: false
->>>>>>> f32ddf9... サインアップ、サインイン実装
     t.text "note"
     t.json "tokens"
     t.datetime "created_at", precision: 6, null: false
