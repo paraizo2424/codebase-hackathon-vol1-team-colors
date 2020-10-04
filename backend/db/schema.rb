@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 2020_09_27_084146) do
   enable_extension "plpgsql"
 
   create_table "square_record_subjects", force: :cascade do |t|
-    t.integer "square_record_id"
+    t.integer "studied_record_id"
     t.integer "subject_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 2020_09_27_084146) do
   create_table "studied_records", force: :cascade do |t|
     t.integer "user_id"
     t.date "date"
-    t.integer "type"
+    t.integer "studied_type"
     t.integer "square_count"
     t.text "note"
     t.datetime "created_at", precision: 6, null: false
