@@ -18,7 +18,11 @@ export default {
   methods: {
     paint() {
       this.count = !this.count
-      this.subjectColor = 'red'
+      if (this.subjectColor) {
+        this.subjectColor = ''
+      } else {
+        this.subjectColor = 'lightgreen'
+      }
     },
   },
 }

@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="container mx-auto">
+  <div class="container mx-auto">
     <div class="flex mb-4">
       <div class="w-3/5">
         <div class="border-solid border-4">

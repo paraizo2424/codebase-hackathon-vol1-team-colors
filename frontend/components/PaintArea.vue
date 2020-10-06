@@ -1,6 +1,8 @@
 <template>
   <div class="PaintArea">
-    <PaintSquare v-for="n in 6" :key="n" />
+    <div class="flex flex-wrap">
+      <PaintSquare v-for="n in 144" :key="n" class="w-1/6" />
+    </div>
   </div>
 </template>
 <script>
@@ -15,7 +17,7 @@ export default {
 <style scoped>
 .PaintArea {
   width: 1fr;
-  height: 440px;
+  height: auto;
   display: flex;
 }
 </style>
