@@ -3,7 +3,15 @@
     <div class="flex mb-4">
       <div class="w-3/5">
         <div class="border-solid border-4">
-          <PaintArea />
+          <div class="flex flex-wrap h-auto">
+            <div
+              v-for="record in records"
+              :key="record.id"
+              class="w-1/6 border-solid border-4 h-24"
+              :style="{ backgroundColor: record.color }"
+              @click="paint(record)"
+            ></div>
+          </div>
         </div>
         <div class="text-center">
           <p>&lt;&lt; 1 2 3 4 5</p>
@@ -36,7 +44,6 @@
           </div>
           <div class="flex-1 border-solid border-4">
             <h3 class="text-center">経過時間</h3>
-            {{ Time }}
           </div>
         </div>
         <h3>描画モード</h3>
@@ -80,9 +87,10 @@
             <div>
               <input
                 id="html5"
+                v-model="checkedSubject"
                 type="radio"
                 name="checked-subject"
-                value="html5"
+                value="red"
               />
               <label for="html5"
                 ><i class="devicon-html5-plain-wordmark colored"></i
@@ -92,16 +100,23 @@
             <div class="flex-1 text-center border-solid border-4">
               <input
                 id="css3"
+                v-model="checkedSubject"
                 type="radio"
                 name="checked-subject"
-                value="css3"
+                value="blue"
               />
               <label for="css3"
                 ><i class="devicon-css3-plain-wordmark colored"></i>CSS3</label
               >
             </div>
             <div class="flex-1 text-center border-solid border-4">
-              <input id="js" type="radio" name="checked-subject" value="js" />
+              <input
+                id="js"
+                v-model="checkedSubject"
+                type="radio"
+                name="checked-subject"
+                value="yellow"
+              />
               <label for="js"
                 ><i class="devicon-javascript-plain colored"></i
                 >JavaScript</label
@@ -110,9 +125,10 @@
             <div class="flex-1 text-center border-solid border-4">
               <input
                 id="ruby"
+                v-model="checkedSubject"
                 type="radio"
                 name="checked-subject"
-                value="ruby"
+                value="deeppink"
               />
               <label for="ruby"
                 ><i class="devicon-ruby-plain-wordmark colored"></i>Ruby</label
@@ -121,9 +137,10 @@
             <div class="flex-1 text-center border-solid border-4">
               <input
                 id="sinatra"
+                v-model="checkedSubject"
                 type="radio"
                 name="checked-subject"
-                value="sinatra"
+                value="gray"
               />
               <label for="sinatra"
                 ><i class="devicon-apache-plain-wordmark colored"></i
@@ -133,9 +150,10 @@
             <div class="flex-1 text-center border-solid border-4">
               <input
                 id="rails"
+                v-model="checkedSubject"
                 type="radio"
                 name="checked-subject"
-                value="rails"
+                value="crimson"
               />
               <label for="rails"
                 ><i class="devicon-rails-plain-wordmark colored"></i>Ruby on
@@ -145,9 +163,10 @@
             <div class="flex-1 text-center border-solid border-4">
               <input
                 id="webapp"
+                v-model="checkedSubject"
                 type="radio"
                 name="checked-subject"
-                value="webapp"
+                value="lime"
               />
               <label for="webapp"
                 ><i class="devicon-ie10-original colored"></i>サイト制作</label
@@ -161,12 +180,202 @@
 </template>
 
 <script>
-import PaintArea from '~/components/PaintArea'
-
 export default {
-  name: 'app',
-  components: {
-    PaintArea,
+  data() {
+    return {
+      checkedSubject: '',
+      records: [
+        {
+          id: 1,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 2,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 3,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 4,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 5,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 6,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 7,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 8,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 9,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 10,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 11,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 12,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 13,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 14,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 15,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 16,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 17,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 18,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 19,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 20,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 21,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 22,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 23,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 24,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 25,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 26,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 27,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 28,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 29,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 30,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+      ],
+    }
+  },
+  methods: {
+    paint(record) {
+      if (record.color) {
+        record.color = ''
+      } else {
+        record.color = this.checkedSubject
+      }
+    },
   },
 }
 </script>
