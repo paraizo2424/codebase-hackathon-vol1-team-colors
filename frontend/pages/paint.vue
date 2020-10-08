@@ -205,6 +205,12 @@ export default {
       checkedSubject: '',
       records: [
         {
+          id: 0,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
           id: 1,
           subject: '',
           color: '',
@@ -390,9 +396,19 @@ export default {
   methods: {
     paint(record) {
       if (this.paintMode === 'paint') {
-        record.color = this.checkedSubject
+        if (record.color === '') {
+          if (record.id - 1 < 0) {
+            record.color = this.checkedSubject
+          } else if (this.records[record.id - 1].color !== '') {
+            record.color = this.checkedSubject
+          }
+        }
       } else if (this.paintMode === 'eraser') {
-        record.color = ''
+        if (this.records.length === record.id + 1) {
+          record.color = ''
+        } else if (this.records[record.id + 1].color === '') {
+          record.color = ''
+        }
       }
     },
   },
