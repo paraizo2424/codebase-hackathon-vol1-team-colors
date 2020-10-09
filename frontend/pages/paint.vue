@@ -6,8 +6,8 @@
           <div class="flex flex-wrap">
             <div
               v-for="i in 144"
-              :key="i"
               :id="i"
+              :key="i"
               class="w-1/6 border-solid border-4 h-24"
             ></div>
           </div>
@@ -26,24 +26,28 @@
         </div>
         <h3>タイマーモード</h3>
         <div class="flex">
-          <div class="flex-1 text-center border-solid border-4">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
+          <div class="flex-1 text-center border-solid border-4" color="red">
+            <div @click="startOrStop">
+              {{ timerOnOff ? 'on' : 'off' }}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                :color="timerColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+            </div>
           </div>
-          <div class="flex-1 border-solid border-4">
+          <div class="flex-1 border-solid border-4 text-center">
             <h3 class="text-center">経過時間</h3>
-            {{ Time }}
+            <p>{{ formatTime }}</p>
           </div>
         </div>
         <h3>描画モード</h3>
@@ -167,5 +171,65 @@
   </div>
 </template>
 
-<script></script>
+<script>
+export default {
+  data() {
+    return {
+      min: 0,
+      sec: 0,
+      timerObj: null,
+      timerOnOff: false,
+      timerColor: 'black',
+    }
+  },
+  computed: {
+    formatTime() {
+      const timeStrings = [this.min.toString(), this.sec.toString()].map(
+        function (str) {
+          if (str.length < 2) {
+            return '0' + str
+          } else {
+            return str
+          }
+        }
+      )
+      return timeStrings[0] + '分' + timeStrings[1] + '秒'
+    },
+  },
+  methods: {
+    count() {
+      if (this.sec >= 59) {
+        this.min++
+        this.sec = 0
+      } else {
+        this.sec++
+      }
+    },
+
+    start() {
+      const self = this
+      this.timerObj = setInterval(function () {
+        self.count()
+      }, 1000)
+      this.timerOn = true
+    },
+
+    stop() {
+      clearInterval(this.timerObj)
+      this.timerOn = false
+    },
+
+    startOrStop() {
+      this.timerOnOff = !this.timerOnOff
+      if (this.timerOnOff) {
+        this.start()
+        this.timerColor = 'red'
+      } else {
+        this.stop()
+        this.timerColor = 'black'
+      }
+    },
+  },
+}
+</script>
 <style></style>
