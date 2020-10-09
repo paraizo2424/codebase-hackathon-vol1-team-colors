@@ -21,7 +21,7 @@
               ></div>
             </div>
 
-            <div class="table-row" v-for="subject in subjects" :key="subject">
+            <div v-for="subject in subjects" :key="subject" class="table-row">
               <div
                 class="table-cell bg-gray-400 text-gray-700 px-4 py-2 text-lg"
               >

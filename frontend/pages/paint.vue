@@ -3,12 +3,13 @@
     <div class="flex mb-4">
       <div class="w-3/5">
         <div class="border-solid border-4">
-          <div class="flex flex-wrap">
+          <div class="flex flex-wrap h-auto">
             <div
-              v-for="i in 144"
-              :key="i"
-              :id="i"
+              v-for="record in records"
+              :key="record.id"
               class="w-1/6 border-solid border-4 h-24"
+              :style="{ backgroundColor: record.color }"
+              @click="paint(record)"
             ></div>
           </div>
         </div>
@@ -43,40 +44,57 @@
           </div>
           <div class="flex-1 border-solid border-4">
             <h3 class="text-center">経過時間</h3>
-            {{ Time }}
           </div>
         </div>
         <h3>描画モード</h3>
         <div class="flex">
           <div class="flex-1 text-center border-solid border-4">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-              />
-            </svg>
+            <input
+              id="paint-mode"
+              v-model="paintMode"
+              type="radio"
+              name="selected-mode"
+              value="paint"
+            />
+            <label for="paint-mode">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                />
+              </svg>
+            </label>
           </div>
           <div class="flex-1 text-center border-solid border-4">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-              />
-            </svg>
+            <input
+              id="eraser-mode"
+              v-model="paintMode"
+              type="radio"
+              name="selected-mode"
+              value="eraser"
+            />
+            <label for="eraser-mode">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                />
+              </svg>
+            </label>
           </div>
         </div>
         <div class="border-solid border-4">
@@ -87,9 +105,10 @@
             <div>
               <input
                 id="html5"
+                v-model="checkedSubject"
                 type="radio"
                 name="checked-subject"
-                value="html5"
+                value="red"
               />
               <label for="html5"
                 ><i class="devicon-html5-plain-wordmark colored"></i
@@ -99,16 +118,23 @@
             <div class="flex-1 text-center border-solid border-4">
               <input
                 id="css3"
+                v-model="checkedSubject"
                 type="radio"
                 name="checked-subject"
-                value="css3"
+                value="blue"
               />
               <label for="css3"
                 ><i class="devicon-css3-plain-wordmark colored"></i>CSS3</label
               >
             </div>
             <div class="flex-1 text-center border-solid border-4">
-              <input id="js" type="radio" name="checked-subject" value="js" />
+              <input
+                id="js"
+                v-model="checkedSubject"
+                type="radio"
+                name="checked-subject"
+                value="yellow"
+              />
               <label for="js"
                 ><i class="devicon-javascript-plain colored"></i
                 >JavaScript</label
@@ -117,9 +143,10 @@
             <div class="flex-1 text-center border-solid border-4">
               <input
                 id="ruby"
+                v-model="checkedSubject"
                 type="radio"
                 name="checked-subject"
-                value="ruby"
+                value="deeppink"
               />
               <label for="ruby"
                 ><i class="devicon-ruby-plain-wordmark colored"></i>Ruby</label
@@ -128,9 +155,10 @@
             <div class="flex-1 text-center border-solid border-4">
               <input
                 id="sinatra"
+                v-model="checkedSubject"
                 type="radio"
                 name="checked-subject"
-                value="sinatra"
+                value="gray"
               />
               <label for="sinatra"
                 ><i class="devicon-apache-plain-wordmark colored"></i
@@ -140,9 +168,10 @@
             <div class="flex-1 text-center border-solid border-4">
               <input
                 id="rails"
+                v-model="checkedSubject"
                 type="radio"
                 name="checked-subject"
-                value="rails"
+                value="crimson"
               />
               <label for="rails"
                 ><i class="devicon-rails-plain-wordmark colored"></i>Ruby on
@@ -152,9 +181,10 @@
             <div class="flex-1 text-center border-solid border-4">
               <input
                 id="webapp"
+                v-model="checkedSubject"
                 type="radio"
                 name="checked-subject"
-                value="webapp"
+                value="lime"
               />
               <label for="webapp"
                 ><i class="devicon-ie10-original colored"></i>サイト制作</label
@@ -167,5 +197,221 @@
   </div>
 </template>
 
-<script></script>
+<script>
+export default {
+  data() {
+    return {
+      paintMode: 'paint',
+      checkedSubject: '',
+      records: [
+        {
+          id: 0,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 1,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 2,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 3,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 4,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 5,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 6,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 7,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 8,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 9,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 10,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 11,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 12,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 13,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 14,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 15,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 16,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 17,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 18,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 19,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 20,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 21,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 22,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 23,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 24,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 25,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 26,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 27,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 28,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 29,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+        {
+          id: 30,
+          subject: '',
+          color: '',
+          Date: '',
+        },
+      ],
+    }
+  },
+  methods: {
+    paint(record) {
+      if (this.paintMode === 'paint') {
+        if (record.color === '') {
+          if (record.id - 1 < 0) {
+            record.color = this.checkedSubject
+          } else if (this.records[record.id - 1].color !== '') {
+            record.color = this.checkedSubject
+          }
+        }
+      } else if (this.paintMode === 'eraser') {
+        if (this.records.length === record.id + 1) {
+          record.color = ''
+        } else if (this.records[record.id + 1].color === '') {
+          record.color = ''
+        }
+      }
+    },
+  },
+}
+</script>
 <style></style>
