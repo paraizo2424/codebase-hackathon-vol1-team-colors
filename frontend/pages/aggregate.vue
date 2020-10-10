@@ -90,6 +90,7 @@
     <div class="w48 text-center">
       <BarChart />
       <p>素晴らしいグラフ</p>
+      <p>{{ info }}</p>
     </div>
   </div>
 </template>
@@ -102,58 +103,60 @@ export default {
   components: {
     BarChart,
   },
-  asyncData() {
-    return axios.get('https://localhost:8000/subjects').then((response) => {
-      return {
-        posts: response.data,
-      }
-    })
+  data() {
+    return {
+      info: null,
+      subjects: [
+        {
+          class: 'devicon-css3-plain-wordmark',
+          item: 'css3',
+          hour: 0,
+          minutes: 0,
+        },
+        {
+          class: 'devicon-javascript-plain',
+          item: 'javascript',
+          hour: 0,
+          minutes: 0,
+        },
+        {
+          class: 'devicon-ruby-plain-wordmark',
+          item: 'ruby',
+          hour: 0,
+          minutes: 0,
+        },
+        {
+          class: 'devicon-apache-plain-wordmark',
+          item: 'sinatra',
+          hour: 0,
+          minutes: 0,
+        },
+        {
+          class: 'devicon-rails-plain-wordmark',
+          item: 'rails',
+          hour: 0,
+          minutes: 0,
+        },
+        {
+          class: 'devicon-ie10-original',
+          item: 'webapp',
+          hour: 0,
+          minutes: 0,
+        },
+      ],
+    }
   },
   mounted() {
-    axios.get('https://localhost:8000/subjects').then((response) => {
-      this.data = response.data.map((subjects) => subjects.number)
-      this.labels = response.data.map((subjects) => subjects.month)
-    })
+    axios
+      .get('http://localhost:8000/subjects', {
+        headers: {
+          'access-token': 'CKMlldF4imjY3gHICEf7hQ',
+          client: 'igIew3qZsF4UCeIzR_1H4Q',
+          uid: 'sample@sample.com',
+        },
+      })
+      .then((response) => (this.info = response))
   },
-  // data (){
-  //       [{
-  //         class: 'devicon-css3-plain-wordmark',
-  //         item: 'css3',
-  //         hour: 0,
-  //         minutes: 0,
-  //       },
-  //       {
-  //         class: 'devicon-javascript-plain',
-  //         item: 'javascript',
-  //         hour: 0,
-  //         minutes: 0,
-  //       },
-  //       {
-  //         class: 'devicon-ruby-plain-wordmark',
-  //         item: 'ruby',
-  //         hour: 0,
-  //         minutes: 0,
-  //       },
-  //       {
-  //         class: 'devicon-apache-plain-wordmark',
-  //         item: 'sinatra',
-  //         hour: 0,
-  //         minutes: 0,
-  //       },
-  //       {
-  //         class: 'devicon-rails-plain-wordmark',
-  //         item: 'rails',
-  //         hour: 0,
-  //         minutes: 0,
-  //       },
-  //       {
-  //         class: 'devicon-ie10-original',
-  //         item: 'webapp',
-  //         hour: 0,
-  //         minutes: 0,
-  //       },
-  //     ],
-  // },
   chartdata: {
     labels: ['January', 'February', 'March', 'April'],
     datasets: [
