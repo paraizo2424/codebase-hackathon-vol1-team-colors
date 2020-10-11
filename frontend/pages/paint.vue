@@ -5,11 +5,11 @@
         <div class="border-solid border-4">
           <div class="flex flex-wrap h-auto">
             <div
-              v-for="record in records"
-              :key="record.id"
+              v-for="square in squares"
+              :key="square.id"
               class="w-1/6 border-solid border-4 h-24"
-              :style="{ backgroundColor: record.color }"
-              @click="paint(record)"
+              :style="{ backgroundColor: square.color }"
+              @click="paint(square)"
             ></div>
           </div>
         </div>
@@ -203,9 +203,12 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   data() {
     return {
+      info: null,
       min: 0,
       sec: 0,
       timerObj: null,
@@ -213,194 +216,7 @@ export default {
       timerColor: 'black',
       paintMode: 'paint',
       checkedSubject: '',
-      records: [
-        {
-          id: 0,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 1,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 2,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 3,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 4,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 5,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 6,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 7,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 8,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 9,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 10,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 11,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 12,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 13,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 14,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 15,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 16,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 17,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 18,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 19,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 20,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 21,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 22,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 23,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 24,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 25,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 26,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 27,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 28,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 29,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 30,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-      ],
+      squares: null,
     }
   },
   computed: {
@@ -416,6 +232,17 @@ export default {
       )
       return timeStrings[0] + '分' + timeStrings[1] + '秒'
     },
+  },
+  mounted() {
+    axios
+      .get('http://localhost:8000/studied_records', {
+        headers: {
+          'access-token': '-3ahp_lHsgihLX3-WE4X4w',
+          client: 'GnI9bCqDLYG5VJUV-ULYWQ',
+          uid: 'sample@sample.com',
+        },
+      })
+      .then((response) => (this.squares = response.data))
   },
   methods: {
     count() {
