@@ -221,17 +221,36 @@ export default {
       if (this.paintMode === 'paint') {
         if (square.color.length === 0 && this.checkedSubject !== '') {
           if (square.id - 1 < 0) {
+            square.subject = [this.checkedSubject.name]
             square.color = [this.checkedSubject.color]
+            square.studied_type = 1
+            square.date =
+              this.today.getFullYear() +
+              '-' +
+              (this.today.getMonth() + 1) +
+              '-' +
+              this.today.getDate()
           } else if (this.squares[square.id - 1].color.length > 0) {
+            square.subject = [this.checkedSubject.name]
             square.color = [this.checkedSubject.color]
+            square.studied_type = 1
+            square.date = this.today
           }
         }
       } else if (this.paintMode === 'eraser') {
         if (square.color.length !== 0) {
           if (square.id === 143) {
+            square.subject = []
             square.color = []
+            square.studied_type = ''
+            square.date = ''
+            square.note = ''
           } else if (this.squares[square.id + 1].color.length === 0) {
+            square.subject = []
             square.color = []
+            square.studied_type = ''
+            square.date = ''
+            square.note = ''
           }
         }
       }
