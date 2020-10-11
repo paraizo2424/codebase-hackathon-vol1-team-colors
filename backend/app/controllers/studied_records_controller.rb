@@ -27,7 +27,7 @@ class StudiedRecordsController < ApplicationController
       studied_record.square_count.times do
         squares[i][:subject] = studied_record.subject.map{|s| s.name}
         squares[i][:color] = studied_record.subject.map{|s| s.color}
-        squares[i][:type] = studied_record.studied_type
+        squares[i][:studied_type] = studied_record.studied_type
         squares[i][:date] = studied_record.date
         squares[i][:note] = studied_record.note
         i += 1
