@@ -13,6 +13,9 @@ export default {
    ** Headers of the page
    ** See https://nuxtjs.org/api/configuration-head
    */
+  router: {
+    middleware: ['auth'],
+  },
   head: {
     title: process.env.npm_package_name || '',
     meta: [
@@ -41,6 +44,7 @@ export default {
    ** https://nuxtjs.org/guide/plugins
    */
   plugins: [
+    { src: '~/plugins/axios.js', ssr: false },
     {
       src: '@/plugins/plugin',
       mode: 'client',
@@ -66,15 +70,36 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
+    '@nuxtjs/auth',
   ],
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
-  axios: {},
-  /*
-   ** Build configuration
-   ** See https://nuxtjs.org/api/configuration-build/
-   */
-  build: {},
-}
+  axios: {
+    baseURL: process.env.BACKEND_API || 'http://localhost:8000',
+    axios: {},
+
+    auth: {
+      redirect: {
+        login: '/login',
+        logout: 'login',
+        callback: false,
+        home: '/',
+      },
+      strategies: {
+        local: {
+          endpoints: {
+            login: { url: '/auth/sign_in', method: 'post', propertyName: false },
+            logout: false,
+            user: false,
+          },
+        },
+      },
+    },
+    /*
+     ** Build configuration
+     ** See https://nuxtjs.org/api/configuration-build/
+     */
+    build: {},
+  }
