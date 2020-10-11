@@ -15,7 +15,7 @@ class StudiedRecordsController < ApplicationController
           id: i,
           subject: [],
           color: [],
-          type: nil,
+          studied_type: nil,
           date: nil,
           note: nil
         }
