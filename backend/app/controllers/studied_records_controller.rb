@@ -1,11 +1,40 @@
 class StudiedRecordsController < ApplicationController
   before_action :set_studied_record, only: [:show, :update, :destroy]
+  before_action :authenticate_user!
 
   # GET /studied_records
   def index
-    @studied_records = StudiedRecord.all
+    @studied_records = StudiedRecord.all.where(user_id: current_user.id)
 
-    render json: @studied_records
+    squares = []
+    square_count = 144 #1ページのマス目の数
+
+    square_count.times do |i|
+      squares.push(
+        {
+          id: i,
+          subject: [],
+          color: [],
+          type: nil,
+          date: nil,
+          note: nil
+        }
+      )
+    end
+
+    i = 0
+    @studied_records.each do |studied_record|
+      studied_record.square_count.times do
+        squares[i][:subject] = studied_record.subject.map{|s| s.name}
+        squares[i][:color] = studied_record.subject.map{|s| s.color}
+        squares[i][:type] = studied_record.studied_type
+        squares[i][:date] = studied_record.date
+        squares[i][:note] = studied_record.note
+        i += 1
+      end
+    end
+
+    render json: squares
   end
 
   # GET /studied_records/1
