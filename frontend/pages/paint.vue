@@ -103,7 +103,7 @@
           </div>
         </div>
         <div class="border-solid border-4">
-          <h2>日付：2020年9月23日</h2>
+          <h2>日付: {{ today.getMonth() + 1 }}月 {{ today.getDate() }}日</h2>
         </div>
         <div class="flex">
           <div class="flex-1 text-center border-solid border-4">
@@ -217,6 +217,7 @@ export default {
       paintMode: 'paint',
       checkedSubject: '',
       squares: null,
+      today: new Date(),
     }
   },
   computed: {
