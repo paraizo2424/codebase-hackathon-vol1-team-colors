@@ -8,9 +8,11 @@
               v-for="square in squares"
               :key="square.id"
               class="w-1/6 border-solid border-4 h-24"
-              :style="{ backgroundColor: square.color }"
+              :style="{ backgroundColor: square.color[0] }"
               @click="paint(square)"
-            ></div>
+            >
+              {{ square.subject }}
+            </div>
           </div>
         </div>
         <div class="text-center">
@@ -279,20 +281,22 @@ export default {
       }
     },
 
-    paint(record) {
+    paint(square) {
       if (this.paintMode === 'paint') {
-        if (record.color === '') {
-          if (record.id - 1 < 0) {
-            record.color = this.checkedSubject
-          } else if (this.records[record.id - 1].color !== '') {
-            record.color = this.checkedSubject
+        if (square.color.length === 0 && this.checkedSubject !== '') {
+          if (square.id - 1 < 0) {
+            square.color = [this.checkedSubject]
+          } else if (this.squares[square.id - 1].color.length > 0) {
+            square.color = [this.checkedSubject]
           }
         }
       } else if (this.paintMode === 'eraser') {
-        if (this.records.length === record.id + 1) {
-          record.color = ''
-        } else if (this.records[record.id + 1].color === '') {
-          record.color = ''
+        if (square.color.length !== 0) {
+          if (square.id === 143) {
+            square.color = []
+          } else if (this.squares[square.id + 1].color.length === 0) {
+            square.color = []
+          }
         }
       }
     },
