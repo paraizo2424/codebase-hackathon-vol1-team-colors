@@ -108,94 +108,21 @@
           <h2>日付: {{ today.getMonth() + 1 }}月 {{ today.getDate() }}日</h2>
         </div>
         <div class="flex">
-          <div class="flex-1 text-center border-solid border-4">
-            <div>
-              <input
-                id="html5"
-                v-model="checkedSubject"
-                type="radio"
-                name="checked-subject"
-                value="red"
-              />
-              <label for="html5"
-                ><i class="devicon-html5-plain-wordmark colored"></i
-                >HTML5</label
-              >
-            </div>
-            <div class="flex-1 text-center border-solid border-4">
-              <input
-                id="css3"
-                v-model="checkedSubject"
-                type="radio"
-                name="checked-subject"
-                value="blue"
-              />
-              <label for="css3"
-                ><i class="devicon-css3-plain-wordmark colored"></i>CSS3</label
-              >
-            </div>
-            <div class="flex-1 text-center border-solid border-4">
-              <input
-                id="js"
-                v-model="checkedSubject"
-                type="radio"
-                name="checked-subject"
-                value="yellow"
-              />
-              <label for="js"
-                ><i class="devicon-javascript-plain colored"></i
-                >JavaScript</label
-              >
-            </div>
-            <div class="flex-1 text-center border-solid border-4">
-              <input
-                id="ruby"
-                v-model="checkedSubject"
-                type="radio"
-                name="checked-subject"
-                value="deeppink"
-              />
-              <label for="ruby"
-                ><i class="devicon-ruby-plain-wordmark colored"></i>Ruby</label
-              >
-            </div>
-            <div class="flex-1 text-center border-solid border-4">
-              <input
-                id="sinatra"
-                v-model="checkedSubject"
-                type="radio"
-                name="checked-subject"
-                value="gray"
-              />
-              <label for="sinatra"
-                ><i class="devicon-apache-plain-wordmark colored"></i
-                >Sinatra</label
-              >
-            </div>
-            <div class="flex-1 text-center border-solid border-4">
-              <input
-                id="rails"
-                v-model="checkedSubject"
-                type="radio"
-                name="checked-subject"
-                value="crimson"
-              />
-              <label for="rails"
-                ><i class="devicon-rails-plain-wordmark colored"></i>Ruby on
-                Rails</label
-              >
-            </div>
-            <div class="flex-1 text-center border-solid border-4">
-              <input
-                id="webapp"
-                v-model="checkedSubject"
-                type="radio"
-                name="checked-subject"
-                value="lime"
-              />
-              <label for="webapp"
-                ><i class="devicon-ie10-original colored"></i>サイト制作</label
-              >
+          <div class="flex-1 text-center border-solid border-4 text-xl">
+            <div v-for="subject in subjects" :key="subject.id" class="my-2">
+              <label :for="subject.name">
+                <div>
+                  <input
+                    :id="subject.name"
+                    v-model="checkedSubject"
+                    type="radio"
+                    name="checked-subject"
+                    :value="subject"
+                  />
+                  <i class="devicon-html5-plain-wordmark colored"></i
+                  >{{ subject.name }}
+                </div>
+              </label>
             </div>
           </div>
         </div>
@@ -219,6 +146,7 @@ export default {
       paintMode: 'paint',
       checkedSubject: '',
       squares: null,
+      subjects: null,
       today: new Date(),
     }
   },
@@ -245,7 +173,15 @@ export default {
           uid: 'sample@sample.com',
         },
       })
-      .then((response) => (this.squares = response.data))
+      .then((response) => {
+        this.squares = response.data.squares
+        this.subjects = response.data.subjects
+      })
+      .catch((error) => {
+        window.console.log(error)
+        this.errored = true
+      })
+      .finally(() => (this.loading = false))
   },
   methods: {
     count() {
@@ -285,9 +221,9 @@ export default {
       if (this.paintMode === 'paint') {
         if (square.color.length === 0 && this.checkedSubject !== '') {
           if (square.id - 1 < 0) {
-            square.color = [this.checkedSubject]
+            square.color = [this.checkedSubject.color]
           } else if (this.squares[square.id - 1].color.length > 0) {
-            square.color = [this.checkedSubject]
+            square.color = [this.checkedSubject.color]
           }
         }
       } else if (this.paintMode === 'eraser') {

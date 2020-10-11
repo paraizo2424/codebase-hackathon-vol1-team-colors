@@ -34,7 +34,21 @@ class StudiedRecordsController < ApplicationController
       end
     end
 
-    render json: squares
+    # Projectテーブルヵら取得する必要があるが、コア部分の実装では
+    # Projectテーブルを作成しないため、一時的にここで取得する。
+    subjects = []
+    Subject.all.each_with_index do |subject, i|
+      subjects.push(
+        {
+          id: i,
+          logo: subject.logo,
+          name: subject.name,
+          color: subject.color
+        }
+      )
+    end
+
+    render json: {subjects: subjects, squares: squares}
   end
 
   # GET /studied_records/1
