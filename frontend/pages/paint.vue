@@ -234,7 +234,12 @@ export default {
             square.subject = [this.checkedSubject.name]
             square.color = [this.checkedSubject.color]
             square.studied_type = 1
-            square.date = this.today
+            square.date =
+              this.today.getFullYear() +
+              '-' +
+              (this.today.getMonth() + 1) +
+              '-' +
+              this.today.getDate()
           }
         }
       } else if (this.paintMode === 'eraser') {
