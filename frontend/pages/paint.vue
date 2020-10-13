@@ -241,6 +241,15 @@ export default {
               (this.today.getMonth() + 1) +
               '-' +
               this.today.getDate()
+
+            axios
+              .post('/studied_records', reqData)
+              .then(function (response) {
+                window.console.log(response)
+              })
+              .catch(function (error) {
+                window.console.log(error)
+              })
           } else if (this.squares[square.id - 1].color.length > 0) {
             square.subject = [this.checkedSubject.name]
             square.color = [this.checkedSubject.color]
