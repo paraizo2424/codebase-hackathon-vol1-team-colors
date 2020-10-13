@@ -88,24 +88,25 @@
       </div>
     </div>
     <div class="w48 text-center">
-      <BarChart />
-      <p>素晴らしいグラフ</p>
-      <p>{{ info }}</p>
+      <BarChartContainer />
+      <!-- <p>{{ info }}</p> -->
     </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
-import BarChart from '@/components/BarChart'
+// import axios from 'axios'
+import BarChartContainer from '@/components/BarChartContainer.vue'
 
 export default {
   components: {
-    BarChart,
+    BarChartContainer,
   },
   data() {
     return {
       info: null,
+      labels: [],
+      data: [],
       subjects: [
         {
           class: 'devicon-css3-plain-wordmark',
@@ -146,27 +147,27 @@ export default {
       ],
     }
   },
-  mounted() {
-    axios
-      .get('http://localhost:8000/subjects', {
-        headers: {
-          'access-token': 'CKMlldF4imjY3gHICEf7hQ',
-          client: 'igIew3qZsF4UCeIzR_1H4Q',
-          uid: 'sample@sample.com',
-        },
-      })
-      .then((response) => (this.info = response))
-  },
-  chartdata: {
-    labels: ['January', 'February', 'March', 'April'],
-    datasets: [
-      {
-        label: ['Data One'],
-        backgroundColor: '#f87979',
-        data: [40, 30, 10, 25],
-      },
-    ],
-  },
+  // mounted() {
+  //   axios
+  //     .get('http://localhost:8000/subjects', {
+  //       headers: {
+  //         'access-token': '9EhnDsx6pa3YyDRVD0ns2Q',
+  //         client: '-DECCSRcAYwQl5bQ48s0sA',
+  //         uid: 'sample@sample.com',
+  //       },
+  //     })
+  //     .then((response) => (this.info = response))
+  // },
+  // chartdata: {
+  //   labels: ['January', 'February', 'March', 'April'],
+  //   datasets: [
+  //     {
+  //       labels: this.labels,
+  //       backgroundColor: '#f87979',
+  //       data: this.data,
+  //     },
+  //   ],
+  // },
 }
 </script>
 <style></style>
