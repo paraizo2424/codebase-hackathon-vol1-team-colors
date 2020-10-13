@@ -134,6 +134,13 @@
 <script>
 import axios from 'axios'
 
+axios.defaults.baseURL = 'http://localhost:8000'
+axios.defaults.headers.common = {
+  'access-token': 'V6PqcGl3PrSFt3unZcGSNg',
+  client: '9yW0kZSM3ISuVuCiInlBlA',
+  uid: 'sample@sample.com',
+}
+
 export default {
   data() {
     return {
@@ -166,20 +173,13 @@ export default {
   },
   mounted() {
     axios
-      .get('http://localhost:8000/studied_records', {
-        headers: {
-          'access-token': '-3ahp_lHsgihLX3-WE4X4w',
-          client: 'GnI9bCqDLYG5VJUV-ULYWQ',
-          uid: 'sample@sample.com',
-        },
-      })
+      .get('/studied_records')
       .then((response) => {
         this.squares = response.data.squares
         this.subjects = response.data.subjects
       })
       .catch((error) => {
         window.console.log(error)
-        this.errored = true
       })
       .finally(() => (this.loading = false))
   },
@@ -240,6 +240,20 @@ export default {
               (this.today.getMonth() + 1) +
               '-' +
               this.today.getDate()
+
+            const reqData = {
+              date: square.date,
+              studied_type: square.studied_type,
+              name: square.subject,
+            }
+            axios
+              .post('/studied_records', reqData)
+              .then(function (response) {
+                window.console.log(response)
+              })
+              .catch(function (error) {
+                window.console.log(error)
+              })
           }
         }
       } else if (this.paintMode === 'eraser') {
