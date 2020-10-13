@@ -58,12 +58,13 @@ class StudiedRecordsController < ApplicationController
 
   # POST /studied_records
   def create
+    studied_records = StudiedRecord.all
     increase_square_count = false
-    if StudiedRecord.exists?(user_id: current_user.id, date: params[:date])
-      user_studied_records = StudiedRecord.where(user_id: current_user.id, date: params[:date])
+    if studied_records.exists?(user_id: current_user.id, date: params[:date])
+      user_studied_records = studied_records.where(user_id: current_user.id, date: params[:date])
+
       user_studied_records.each do |user_studied_record|
         if user_studied_record.subject.pluck(:name) == params[:name]
-          pp "一緒!!"
           user_studied_record.square_count += 1
           user_studied_record.save!
           increase_square_count = true
@@ -75,7 +76,24 @@ class StudiedRecordsController < ApplicationController
     if increase_square_count
       render json: "square increase ok!"
     else
-      render json: @studied_record, status: :created, location: @studied_record
+      ActiveRecord::Base.transaction do
+        studied_record = StudiedRecord.new(
+          user_id: current_user.id,
+          date: params[:date],
+          studied_type: params[:studied_type],
+          square_count: 1,
+          note: ""
+        )
+        studied_record.save!
+
+        subject_id = Subject.find_by(name: params[:name]).id
+        squaer_record_subject = SquareRecordSubject.new(
+          studied_record_id: studied_record.id,
+          subject_id: subject_id
+        )
+        squaer_record_subject.save!
+      end
+      render json: "square add ok!"
     end
   end
 
