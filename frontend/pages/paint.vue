@@ -261,13 +261,6 @@ export default {
               '-' +
               this.today.getDate()
 
-            const reqData = {
-              // （デバッグ用）日付の操作
-              // date: square.date,
-              date: '2020-11-07',
-              studied_type: square.studied_type,
-              name: square.subject,
-            }
             axios
               .post('/studied_records', reqData)
               .then(function (response) {
@@ -280,18 +273,42 @@ export default {
         }
       } else if (this.paintMode === 'eraser') {
         if (square.color.length !== 0) {
+          const reqData = {
+            data: {
+              date: square.date,
+              name: square.subject,
+            },
+          }
           if (square.id === 143) {
             square.subject = []
             square.color = []
             square.studied_type = ''
             square.date = ''
             square.note = ''
+
+            axios
+              .delete('/studied_records', reqData)
+              .then(function (response) {
+                window.console.log(response)
+              })
+              .catch(function (error) {
+                window.console.log(error)
+              })
           } else if (this.squares[square.id + 1].color.length === 0) {
             square.subject = []
             square.color = []
             square.studied_type = ''
             square.date = ''
             square.note = ''
+
+            axios
+              .delete('/studied_records', reqData)
+              .then(function (response) {
+                window.console.log(response)
+              })
+              .catch(function (error) {
+                window.console.log(error)
+              })
           }
         }
       }

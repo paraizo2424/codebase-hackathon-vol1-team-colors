@@ -1,5 +1,5 @@
 class StudiedRecordsController < ApplicationController
-  before_action :set_studied_record, only: [:show, :update, :destroy]
+  before_action :set_studied_record, only: [:show, :update]
   before_action :authenticate_user!
 
   # GET /studied_records
@@ -106,9 +106,23 @@ class StudiedRecordsController < ApplicationController
     end
   end
 
-  # DELETE /studied_records/1
+  # DELETE /studied_records
   def destroy
-    @studied_record.destroy
+    studied_records = StudiedRecord.where(user_id: current_user.id, date: params[:date])
+    studied_records.each do |studied_record|
+      if studied_record.subject.pluck(:name) == params[:name]
+        ActiveRecord::Base.transaction do
+          studied_record.square_count -= 1
+          studied_record.save!
+          if studied_record.square_count <= 0
+            studied_record.destroy!
+          end
+        end
+        break
+      end
+    end
+
+    render json: 'delete ok!'
   end
 
   private
