@@ -58,12 +58,24 @@ class StudiedRecordsController < ApplicationController
 
   # POST /studied_records
   def create
-    @studied_record = StudiedRecord.new(studied_record_params)
+    increase_square_count = false
+    if StudiedRecord.exists?(user_id: current_user.id, date: params[:date])
+      user_studied_records = StudiedRecord.where(user_id: current_user.id, date: params[:date])
+      user_studied_records.each do |user_studied_record|
+        if user_studied_record.subject.pluck(:name) == params[:name]
+          pp "一緒!!"
+          user_studied_record.square_count += 1
+          user_studied_record.save!
+          increase_square_count = true
+          break
+        end
+      end
+    end
 
-    if @studied_record.save
-      render json: @studied_record, status: :created, location: @studied_record
+    if increase_square_count
+      render json: "square increase ok!"
     else
-      render json: @studied_record.errors, status: :unprocessable_entity
+      render json: @studied_record, status: :created, location: @studied_record
     end
   end
 

@@ -11,7 +11,8 @@
               :style="{ backgroundColor: square.color[0] }"
               @click="paint(square)"
             >
-              {{ square.subject }}
+              <!-- デバッグ用に表示 -->
+              {{ square.subject }}{{ square.date }}
             </div>
           </div>
         </div>
@@ -242,7 +243,9 @@ export default {
               this.today.getDate()
 
             const reqData = {
-              date: square.date,
+              // （デバッグ用）日付の操作
+              // date: square.date,
+              date: '2020-11-07',
               studied_type: square.studied_type,
               name: square.subject,
             }
