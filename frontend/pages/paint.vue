@@ -221,6 +221,16 @@ export default {
     paint(square) {
       if (this.paintMode === 'paint') {
         if (square.color.length === 0 && this.checkedSubject !== '') {
+          const reqData = {
+            date:
+              this.today.getFullYear() +
+              '-' +
+              (this.today.getMonth() + 1) +
+              '-' +
+              this.today.getDate(),
+            studied_type: 1,
+            name: [this.checkedSubject.name],
+          }
           if (square.id - 1 < 0) {
             square.subject = [this.checkedSubject.name]
             square.color = [this.checkedSubject.color]
