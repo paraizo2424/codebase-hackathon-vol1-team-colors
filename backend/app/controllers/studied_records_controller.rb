@@ -4,7 +4,7 @@ class StudiedRecordsController < ApplicationController
 
   # GET /studied_records
   def index
-    @studied_records = StudiedRecord.all.where(user_id: current_user.id)
+    @studied_records = StudiedRecord.all.where(user_id: current_user.id).order(date: :asc)
 
     squares = []
     square_count = 144 #1ページのマス目の数
