@@ -134,7 +134,8 @@
 
 <script>
 import axios from 'axios'
-
+// nuxt/dotenvの導入 #46のイシューで解決している部分
+// だと思うが、先に進めるためにいったんpushします^^;
 axios.defaults.baseURL = 'http://localhost:8000'
 axios.defaults.headers.common = {
   'access-token': 'V6PqcGl3PrSFt3unZcGSNg',
