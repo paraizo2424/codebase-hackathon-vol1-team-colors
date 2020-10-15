@@ -143,6 +143,11 @@ axios.defaults.headers.common = {
   uid: 'sample@sample.com',
 }
 
+const timerType = 1
+const paintType = 2
+
+const maxPageSquareCount = 144 // 1ページに描画するマスの個数
+
 export default {
   data() {
     return {
@@ -177,6 +182,7 @@ export default {
     axios
       .get('/studied_records')
       .then((response) => {
+        window.console.log(response)
         this.squares = response.data.squares
         this.subjects = response.data.subjects
       })
@@ -193,13 +199,48 @@ export default {
       } else {
         this.sec++
       }
+
+      if (this.min % 10 === 0 && this.sec === 0) {
+        const reqData = {
+          date:
+            this.today.getFullYear() +
+            '-' +
+            (this.today.getMonth() + 1) +
+            '-' +
+            this.today.getDate(),
+          studied_type: timerType,
+          name: [this.checkedSubject.name],
+        }
+
+        let endSquareId = 0 // 末尾マス
+        for (let i = 0; i < maxPageSquareCount; i++) {
+          if (this.squares[i].color.length === 0) {
+            endSquareId = i
+            break
+          }
+        }
+
+        this.squares[endSquareId].subject = reqData.name
+        this.squares[endSquareId].color = [this.checkedSubject.color]
+        this.squares[endSquareId].studied_type = reqData.type
+        this.squares[endSquareId].date = reqData.date
+
+        axios
+          .post('/studied_records', reqData)
+          .then(function (response) {
+            window.console.log(response)
+          })
+          .catch(function (error) {
+            window.console.log(error)
+          })
+      }
     },
 
     start() {
       const self = this
       this.timerObj = setInterval(function () {
         self.count()
-      }, 1000)
+      }, 1000) // 1秒=1000
       this.timerOn = true
     },
 
@@ -209,13 +250,15 @@ export default {
     },
 
     startOrStop() {
-      this.timerOnOff = !this.timerOnOff
-      if (this.timerOnOff) {
-        this.start()
-        this.timerColor = 'red'
-      } else {
-        this.stop()
-        this.timerColor = 'black'
+      if (this.checkedSubject !== '') {
+        this.timerOnOff = !this.timerOnOff
+        if (this.timerOnOff) {
+          this.start()
+          this.timerColor = 'red'
+        } else {
+          this.stop()
+          this.timerColor = 'black'
+        }
       }
     },
 
@@ -229,13 +272,13 @@ export default {
               (this.today.getMonth() + 1) +
               '-' +
               this.today.getDate(),
-            studied_type: 1,
+            studied_type: paintType,
             name: [this.checkedSubject.name],
           }
           if (square.id - 1 < 0) {
             square.subject = [this.checkedSubject.name]
             square.color = [this.checkedSubject.color]
-            square.studied_type = 1
+            square.studied_type = paintType
             square.date =
               this.today.getFullYear() +
               '-' +
@@ -254,7 +297,7 @@ export default {
           } else if (this.squares[square.id - 1].color.length > 0) {
             square.subject = [this.checkedSubject.name]
             square.color = [this.checkedSubject.color]
-            square.studied_type = 1
+            square.studied_type = paintType
             square.date =
               this.today.getFullYear() +
               '-' +
@@ -280,7 +323,7 @@ export default {
               name: square.subject,
             },
           }
-          if (square.id === 143) {
+          if (square.id === maxPageSquareCount - 1) {
             square.subject = []
             square.color = []
             square.studied_type = ''

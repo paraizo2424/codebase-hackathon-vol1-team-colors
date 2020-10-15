@@ -7,9 +7,9 @@ class StudiedRecordsController < ApplicationController
     @studied_records = StudiedRecord.all.where(user_id: current_user.id).order(date: :asc)
 
     squares = []
-    square_count = 144 #1ページのマス目の数
+    max_page_square_count = 144 #1ページのマス目の数
 
-    square_count.times do |i|
+    max_page_square_count.times do |i|
       squares.push(
         {
           id: i,
@@ -24,6 +24,7 @@ class StudiedRecordsController < ApplicationController
 
     i = 0
     @studied_records.each do |studied_record|
+      break if max_page_square_count == i
       studied_record.square_count.times do
         squares[i][:subject] = studied_record.subject.map{|s| s.name}
         squares[i][:color] = studied_record.subject.map{|s| s.color}
@@ -31,6 +32,7 @@ class StudiedRecordsController < ApplicationController
         squares[i][:date] = studied_record.date
         squares[i][:note] = studied_record.note
         i += 1
+        break if max_page_square_count == i
       end
     end
 
