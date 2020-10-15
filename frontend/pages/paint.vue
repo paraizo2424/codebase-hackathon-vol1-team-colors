@@ -146,6 +146,8 @@ axios.defaults.headers.common = {
 const timerType = 1
 const paintType = 2
 
+const maxPageSquareCount = 144 // 1ページに描画するマスの個数
+
 export default {
   data() {
     return {
@@ -208,6 +210,19 @@ export default {
           studied_type: timerType,
           name: [this.checkedSubject.name],
         }
+
+        let endSquareId = 0 // 末尾マス
+        for (let i = 0; i < maxPageSquareCount; i++) {
+          if (this.squares[i].color.length === 0) {
+            endSquareId = i
+            break
+          }
+        }
+
+        this.squares[endSquareId].subject = reqData.name
+        this.squares[endSquareId].color = [this.checkedSubject.color]
+        this.squares[endSquareId].studied_type = reqData.type
+        this.squares[endSquareId].date = reqData.date
 
         axios
           .post('/studied_records', reqData)
@@ -305,7 +320,7 @@ export default {
               name: square.subject,
             },
           }
-          if (square.id === 143) {
+          if (square.id === maxPageSquareCount - 1) {
             square.subject = []
             square.color = []
             square.studied_type = ''
