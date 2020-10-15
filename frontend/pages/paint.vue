@@ -182,6 +182,7 @@ export default {
     axios
       .get('/studied_records')
       .then((response) => {
+        window.console.log(response)
         this.squares = response.data.squares
         this.subjects = response.data.subjects
       })
@@ -239,7 +240,7 @@ export default {
       const self = this
       this.timerObj = setInterval(function () {
         self.count()
-      }, 1000)
+      }, 1000) // 1秒=1000
       this.timerOn = true
     },
 
