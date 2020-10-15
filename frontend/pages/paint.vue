@@ -250,13 +250,15 @@ export default {
     },
 
     startOrStop() {
-      this.timerOnOff = !this.timerOnOff
-      if (this.timerOnOff) {
-        this.start()
-        this.timerColor = 'red'
-      } else {
-        this.stop()
-        this.timerColor = 'black'
+      if (this.checkedSubject !== '') {
+        this.timerOnOff = !this.timerOnOff
+        if (this.timerOnOff) {
+          this.start()
+          this.timerColor = 'red'
+        } else {
+          this.stop()
+          this.timerColor = 'black'
+        }
       }
     },
 
