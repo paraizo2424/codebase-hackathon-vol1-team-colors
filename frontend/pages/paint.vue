@@ -143,6 +143,9 @@ axios.defaults.headers.common = {
   uid: 'sample@sample.com',
 }
 
+const timerType = 1
+const paintType = 2
+
 export default {
   data() {
     return {
@@ -193,6 +196,28 @@ export default {
       } else {
         this.sec++
       }
+
+      if (this.min % 10 === 0 && this.sec === 0) {
+        const reqData = {
+          date:
+            this.today.getFullYear() +
+            '-' +
+            (this.today.getMonth() + 1) +
+            '-' +
+            this.today.getDate(),
+          studied_type: timerType,
+          name: [this.checkedSubject.name],
+        }
+
+        axios
+          .post('/studied_records', reqData)
+          .then(function (response) {
+            window.console.log(response)
+          })
+          .catch(function (error) {
+            window.console.log(error)
+          })
+      }
     },
 
     start() {
@@ -229,13 +254,13 @@ export default {
               (this.today.getMonth() + 1) +
               '-' +
               this.today.getDate(),
-            studied_type: 1,
+            studied_type: paintType,
             name: [this.checkedSubject.name],
           }
           if (square.id - 1 < 0) {
             square.subject = [this.checkedSubject.name]
             square.color = [this.checkedSubject.color]
-            square.studied_type = 1
+            square.studied_type = paintType
             square.date =
               this.today.getFullYear() +
               '-' +
@@ -254,7 +279,7 @@ export default {
           } else if (this.squares[square.id - 1].color.length > 0) {
             square.subject = [this.checkedSubject.name]
             square.color = [this.checkedSubject.color]
-            square.studied_type = 1
+            square.studied_type = paintType
             square.date =
               this.today.getFullYear() +
               '-' +
