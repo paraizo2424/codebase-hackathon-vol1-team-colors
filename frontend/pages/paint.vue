@@ -5,12 +5,15 @@
         <div class="border-solid border-4">
           <div class="flex flex-wrap h-auto">
             <div
-              v-for="record in records"
-              :key="record.id"
+              v-for="square in squares"
+              :key="square.id"
               class="w-1/6 border-solid border-4 h-24"
-              :style="{ backgroundColor: record.color }"
-              @click="paint(record)"
-            ></div>
+              :style="{ backgroundColor: square.color[0] }"
+              @click="paint(square)"
+            >
+              <!-- デバッグ用に表示 -->
+              {{ square.subject }}{{ square.date }}
+            </div>
           </div>
         </div>
         <div class="text-center">
@@ -103,97 +106,24 @@
           </div>
         </div>
         <div class="border-solid border-4">
-          <h2>日付：2020年9月23日</h2>
+          <h2>日付: {{ today.getMonth() + 1 }}月 {{ today.getDate() }}日</h2>
         </div>
         <div class="flex">
-          <div class="flex-1 text-center border-solid border-4">
-            <div>
-              <input
-                id="html5"
-                v-model="checkedSubject"
-                type="radio"
-                name="checked-subject"
-                value="red"
-              />
-              <label for="html5"
-                ><i class="devicon-html5-plain-wordmark colored"></i
-                >HTML5</label
-              >
-            </div>
-            <div class="flex-1 text-center border-solid border-4">
-              <input
-                id="css3"
-                v-model="checkedSubject"
-                type="radio"
-                name="checked-subject"
-                value="blue"
-              />
-              <label for="css3"
-                ><i class="devicon-css3-plain-wordmark colored"></i>CSS3</label
-              >
-            </div>
-            <div class="flex-1 text-center border-solid border-4">
-              <input
-                id="js"
-                v-model="checkedSubject"
-                type="radio"
-                name="checked-subject"
-                value="yellow"
-              />
-              <label for="js"
-                ><i class="devicon-javascript-plain colored"></i
-                >JavaScript</label
-              >
-            </div>
-            <div class="flex-1 text-center border-solid border-4">
-              <input
-                id="ruby"
-                v-model="checkedSubject"
-                type="radio"
-                name="checked-subject"
-                value="deeppink"
-              />
-              <label for="ruby"
-                ><i class="devicon-ruby-plain-wordmark colored"></i>Ruby</label
-              >
-            </div>
-            <div class="flex-1 text-center border-solid border-4">
-              <input
-                id="sinatra"
-                v-model="checkedSubject"
-                type="radio"
-                name="checked-subject"
-                value="gray"
-              />
-              <label for="sinatra"
-                ><i class="devicon-apache-plain-wordmark colored"></i
-                >Sinatra</label
-              >
-            </div>
-            <div class="flex-1 text-center border-solid border-4">
-              <input
-                id="rails"
-                v-model="checkedSubject"
-                type="radio"
-                name="checked-subject"
-                value="crimson"
-              />
-              <label for="rails"
-                ><i class="devicon-rails-plain-wordmark colored"></i>Ruby on
-                Rails</label
-              >
-            </div>
-            <div class="flex-1 text-center border-solid border-4">
-              <input
-                id="webapp"
-                v-model="checkedSubject"
-                type="radio"
-                name="checked-subject"
-                value="lime"
-              />
-              <label for="webapp"
-                ><i class="devicon-ie10-original colored"></i>サイト制作</label
-              >
+          <div class="flex-1 text-center border-solid border-4 text-xl">
+            <div v-for="subject in subjects" :key="subject.id" class="my-2">
+              <label :for="subject.name">
+                <div>
+                  <input
+                    :id="subject.name"
+                    v-model="checkedSubject"
+                    type="radio"
+                    name="checked-subject"
+                    :value="subject"
+                  />
+                  <i class="devicon-html5-plain-wordmark colored"></i
+                  >{{ subject.name }}
+                </div>
+              </label>
             </div>
           </div>
         </div>
@@ -203,9 +133,20 @@
 </template>
 
 <script>
+import axios from 'axios'
+// nuxt/dotenvの導入 #46のイシューで解決している部分
+// だと思うが、先に進めるためにいったんpushします^^;
+axios.defaults.baseURL = 'http://localhost:8000'
+axios.defaults.headers.common = {
+  'access-token': 'V6PqcGl3PrSFt3unZcGSNg',
+  client: '9yW0kZSM3ISuVuCiInlBlA',
+  uid: 'sample@sample.com',
+}
+
 export default {
   data() {
     return {
+      info: null,
       min: 0,
       sec: 0,
       timerObj: null,
@@ -213,194 +154,9 @@ export default {
       timerColor: 'black',
       paintMode: 'paint',
       checkedSubject: '',
-      records: [
-        {
-          id: 0,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 1,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 2,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 3,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 4,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 5,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 6,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 7,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 8,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 9,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 10,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 11,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 12,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 13,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 14,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 15,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 16,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 17,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 18,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 19,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 20,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 21,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 22,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 23,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 24,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 25,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 26,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 27,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 28,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 29,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-        {
-          id: 30,
-          subject: '',
-          color: '',
-          Date: '',
-        },
-      ],
+      squares: null,
+      subjects: null,
+      today: new Date(),
     }
   },
   computed: {
@@ -416,6 +172,18 @@ export default {
       )
       return timeStrings[0] + '分' + timeStrings[1] + '秒'
     },
+  },
+  mounted() {
+    axios
+      .get('/studied_records')
+      .then((response) => {
+        this.squares = response.data.squares
+        this.subjects = response.data.subjects
+      })
+      .catch((error) => {
+        window.console.log(error)
+      })
+      .finally(() => (this.loading = false))
   },
   methods: {
     count() {
@@ -451,20 +219,98 @@ export default {
       }
     },
 
-    paint(record) {
+    paint(square) {
       if (this.paintMode === 'paint') {
-        if (record.color === '') {
-          if (record.id - 1 < 0) {
-            record.color = this.checkedSubject
-          } else if (this.records[record.id - 1].color !== '') {
-            record.color = this.checkedSubject
+        if (square.color.length === 0 && this.checkedSubject !== '') {
+          const reqData = {
+            date:
+              this.today.getFullYear() +
+              '-' +
+              (this.today.getMonth() + 1) +
+              '-' +
+              this.today.getDate(),
+            studied_type: 1,
+            name: [this.checkedSubject.name],
+          }
+          if (square.id - 1 < 0) {
+            square.subject = [this.checkedSubject.name]
+            square.color = [this.checkedSubject.color]
+            square.studied_type = 1
+            square.date =
+              this.today.getFullYear() +
+              '-' +
+              (this.today.getMonth() + 1) +
+              '-' +
+              this.today.getDate()
+
+            axios
+              .post('/studied_records', reqData)
+              .then(function (response) {
+                window.console.log(response)
+              })
+              .catch(function (error) {
+                window.console.log(error)
+              })
+          } else if (this.squares[square.id - 1].color.length > 0) {
+            square.subject = [this.checkedSubject.name]
+            square.color = [this.checkedSubject.color]
+            square.studied_type = 1
+            square.date =
+              this.today.getFullYear() +
+              '-' +
+              (this.today.getMonth() + 1) +
+              '-' +
+              this.today.getDate()
+
+            axios
+              .post('/studied_records', reqData)
+              .then(function (response) {
+                window.console.log(response)
+              })
+              .catch(function (error) {
+                window.console.log(error)
+              })
           }
         }
       } else if (this.paintMode === 'eraser') {
-        if (this.records.length === record.id + 1) {
-          record.color = ''
-        } else if (this.records[record.id + 1].color === '') {
-          record.color = ''
+        if (square.color.length !== 0) {
+          const reqData = {
+            data: {
+              date: square.date,
+              name: square.subject,
+            },
+          }
+          if (square.id === 143) {
+            square.subject = []
+            square.color = []
+            square.studied_type = ''
+            square.date = ''
+            square.note = ''
+
+            axios
+              .delete('/studied_records', reqData)
+              .then(function (response) {
+                window.console.log(response)
+              })
+              .catch(function (error) {
+                window.console.log(error)
+              })
+          } else if (this.squares[square.id + 1].color.length === 0) {
+            square.subject = []
+            square.color = []
+            square.studied_type = ''
+            square.date = ''
+            square.note = ''
+
+            axios
+              .delete('/studied_records', reqData)
+              .then(function (response) {
+                window.console.log(response)
+              })
+              .catch(function (error) {
+                window.console.log(error)
+              })
+          }
         }
       }
     },
