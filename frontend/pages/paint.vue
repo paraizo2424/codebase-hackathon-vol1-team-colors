@@ -17,7 +17,11 @@
           </div>
         </div>
         <div class="text-center">
-          <p>&lt;&lt; 1 2 3 4 5</p>
+          <sliding-pagination
+            :current="currentPage"
+            :total="totalPages"
+            @page-change="pageChangeHandler"
+          />
         </div>
       </div>
       <div class="w-2/5">
@@ -162,6 +166,8 @@ export default {
       squares: null,
       subjects: null,
       today: new Date(),
+      currentPage: 1,
+      totalPages: 10,
     }
   },
   computed: {
@@ -192,6 +198,9 @@ export default {
       .finally(() => (this.loading = false))
   },
   methods: {
+    pageChangeHandler(selectedPage) {
+      this.currentPage = selectedPage
+    },
     count() {
       if (this.sec >= 59) {
         this.min++
