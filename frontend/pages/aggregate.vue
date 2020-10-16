@@ -88,22 +88,26 @@
       </div>
     </div>
     <div class="w48 text-center">
-      <P>ここに素晴らしいグラフが入る</P>
+      <BarChartContainer />
+      <!-- <p>{{ info }}</p> -->
     </div>
   </div>
 </template>
 
 <script>
+// import axios from 'axios'
+import BarChartContainer from '@/components/BarChartContainer.vue'
+
 export default {
+  components: {
+    BarChartContainer,
+  },
   data() {
     return {
+      info: null,
+      labels: [],
+      data: [],
       subjects: [
-        {
-          class: 'devicon-html5-plain-wordmark',
-          item: 'html5',
-          hour: 0,
-          minutes: 0,
-        },
         {
           class: 'devicon-css3-plain-wordmark',
           item: 'css3',
@@ -143,6 +147,27 @@ export default {
       ],
     }
   },
+  // mounted() {
+  //   axios
+  //     .get('http://localhost:8000/subjects', {
+  //       headers: {
+  //         'access-token': '9EhnDsx6pa3YyDRVD0ns2Q',
+  //         client: '-DECCSRcAYwQl5bQ48s0sA',
+  //         uid: 'sample@sample.com',
+  //       },
+  //     })
+  //     .then((response) => (this.info = response))
+  // },
+  // chartdata: {
+  //   labels: ['January', 'February', 'March', 'April'],
+  //   datasets: [
+  //     {
+  //       labels: this.labels,
+  //       backgroundColor: '#f87979',
+  //       data: this.data,
+  //     },
+  //   ],
+  // },
 }
 </script>
 <style></style>
