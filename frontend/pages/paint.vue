@@ -163,11 +163,12 @@ export default {
       timerColor: 'black',
       paintMode: 'paint',
       checkedSubject: '',
+      pages: null,
       squares: null,
       subjects: null,
       today: new Date(),
-      currentPage: 1,
-      totalPages: 10,
+      currentPage: null,
+      totalPages: null,
     }
   },
   computed: {
@@ -184,12 +185,20 @@ export default {
       return timeStrings[0] + '分' + timeStrings[1] + '秒'
     },
   },
+  watch: {
+    currentPage() {
+      this.squares = this.pages[this.currentPage - 1]
+    },
+  },
   mounted() {
     axios
       .get('/studied_records')
       .then((response) => {
         window.console.log(response)
-        this.squares = response.data.squares
+        this.pages = response.data.pages
+        this.totalPages = this.pages.length
+        this.currentPage = this.totalPages
+        this.squares = this.pages[this.totalPages - 1]
         this.subjects = response.data.subjects
       })
       .catch((error) => {
