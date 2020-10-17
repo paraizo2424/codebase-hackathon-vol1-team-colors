@@ -167,8 +167,8 @@ export default {
       squares: null,
       subjects: null,
       today: new Date(),
-      currentPage: null,
-      totalPages: null,
+      currentPage: 1,
+      totalPages: 1,
     }
   },
   computed: {
