@@ -17,7 +17,11 @@
           </div>
         </div>
         <div class="text-center">
-          <p>&lt;&lt; 1 2 3 4 5</p>
+          <sliding-pagination
+            :current="currentPage"
+            :total="totalPages"
+            @page-change="pageChangeHandler"
+          />
         </div>
       </div>
       <div class="w-2/5">
@@ -159,9 +163,12 @@ export default {
       timerColor: 'black',
       paintMode: 'paint',
       checkedSubject: '',
+      pages: null,
       squares: null,
       subjects: null,
       today: new Date(),
+      currentPage: 1,
+      totalPages: 1,
     }
   },
   computed: {
@@ -178,12 +185,20 @@ export default {
       return timeStrings[0] + '分' + timeStrings[1] + '秒'
     },
   },
+  watch: {
+    currentPage() {
+      this.squares = this.pages[this.currentPage - 1]
+    },
+  },
   mounted() {
     axios
       .get('/studied_records')
       .then((response) => {
         window.console.log(response)
-        this.squares = response.data.squares
+        this.pages = response.data.pages
+        this.totalPages = this.pages.length
+        this.currentPage = this.totalPages
+        this.squares = this.pages[this.totalPages - 1]
         this.subjects = response.data.subjects
       })
       .catch((error) => {
@@ -192,6 +207,9 @@ export default {
       .finally(() => (this.loading = false))
   },
   methods: {
+    pageChangeHandler(selectedPage) {
+      this.currentPage = selectedPage
+    },
     count() {
       if (this.sec >= 59) {
         this.min++

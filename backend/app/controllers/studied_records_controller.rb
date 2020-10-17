@@ -6,25 +6,12 @@ class StudiedRecordsController < ApplicationController
   def index
     @studied_records = StudiedRecord.all.where(user_id: current_user.id).order(date: :asc)
 
-    squares = []
     max_page_square_count = 144 #1ページのマス目の数
-
-    max_page_square_count.times do |i|
-      squares.push(
-        {
-          id: i,
-          subject: [],
-          color: [],
-          studied_type: nil,
-          date: nil,
-          note: nil
-        }
-      )
-    end
+    squares = set_squares_object(max_page_square_count)
+    pages = []
 
     i = 0
     @studied_records.each do |studied_record|
-      break if max_page_square_count == i
       studied_record.square_count.times do
         squares[i][:subject] = studied_record.subject.map{|s| s.name}
         squares[i][:color] = studied_record.subject.map{|s| s.color}
@@ -32,9 +19,15 @@ class StudiedRecordsController < ApplicationController
         squares[i][:date] = studied_record.date
         squares[i][:note] = studied_record.note
         i += 1
-        break if max_page_square_count == i
+
+        if max_page_square_count == i
+          i = 0
+          pages.push(squares)
+          squares = set_squares_object(max_page_square_count)
+        end
       end
     end
+    pages.push(squares)
 
     # Projectテーブルヵら取得する必要があるが、コア部分の実装では
     # Projectテーブルを作成しないため、一時的にここで取得する。
@@ -50,7 +43,7 @@ class StudiedRecordsController < ApplicationController
       )
     end
 
-    render json: {subjects: subjects, squares: squares}
+    render json: {subjects: subjects, pages: pages}
   end
 
   # GET /studied_records/1
@@ -128,6 +121,23 @@ class StudiedRecordsController < ApplicationController
   end
 
   private
+    def set_squares_object(max_page_square_count)
+      squares = []
+      max_page_square_count.times do |i|
+        squares.push(
+          {
+            id: i,
+            subject: [],
+            color: [],
+            studied_type: nil,
+            date: nil,
+            note: nil
+          }
+        )
+      end
+      squares
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_studied_record
       @studied_record = StudiedRecord.find(params[:id])
