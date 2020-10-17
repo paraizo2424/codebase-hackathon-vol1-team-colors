@@ -41,6 +41,7 @@
           </label>
           <input
             id="name"
+            v-model="name"
             name="name"
             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="text"
@@ -53,6 +54,7 @@
           </label>
           <input
             id="email"
+            v-model="email"
             name="email"
             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="text"
@@ -65,6 +67,7 @@
           </label>
           <input
             id="birth"
+            v-model="birth"
             name="birth"
             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
             type="date"
@@ -79,12 +82,10 @@
             変更するパスワード
           </label>
           <input
-            id="password
-            "
+            id="password"
             name="password"
             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            type="password
-            "
+            type="password"
             placeholder="Password"
           />
         </div>
@@ -96,12 +97,10 @@
             変更するパスワード(確認用)
           </label>
           <input
-            id="password_confirm
-            "
+            id="password_confirm"
             name="password_confirm"
             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            type="password
-             "
+            type="password"
             placeholder="Password_confirm"
           />
         </div>
@@ -113,11 +112,12 @@
             自己紹介
           </label>
           <textarea
-            id="introduce"
-            name="introduce"
+            id="note"
+            v-model="note"
+            name="note"
             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             rows="5"
-            placeholder="Introduce"
+            placeholder="Note"
           />
         </div>
         <div class="text-center">
@@ -134,7 +134,44 @@
 </template>
 
 <script>
-export default {}
+import axios from 'axios'
+// nuxt/dotenvの導入 #46のイシューで解決している部分
+// だと思うが、先に進めるためにいったんpushします^^;
+axios.defaults.baseURL = 'http://localhost:8000'
+axios.defaults.headers.common = {
+  'access-token': 'V6PqcGl3PrSFt3unZcGSNg',
+  client: '9yW0kZSM3ISuVuCiInlBlA',
+  uid: 'sample@sample.com',
+}
+
+export default {
+  data() {
+    return {
+      profileImage: null,
+      name: '',
+      email: '',
+      birth: '',
+      password: '',
+      password_confirm: '',
+      note: '',
+    }
+  },
+  mounted() {
+    axios
+      .get('/users')
+      .then((response) => {
+        window.console.log(response)
+        this.name = response.data.name
+        this.email = response.data.email
+        this.birth = response.data.birth
+        this.note = response.data.note
+      })
+      .catch((error) => {
+        window.console.log(error)
+      })
+      .finally(() => (this.loading = false))
+  },
+}
 </script>
 
 <style>
