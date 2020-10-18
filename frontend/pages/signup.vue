@@ -132,6 +132,7 @@ export default {
           note: this.note,
         })
         .then(() => {
+          alert('登録しました')
           this.$router.push('/login')
         })
     },
