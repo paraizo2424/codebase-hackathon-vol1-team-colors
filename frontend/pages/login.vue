@@ -71,22 +71,21 @@ export default {
     }
   },
   methods: {
-    login() {
-      this.$auth
+    async login() {
+      await this.$auth
         .loginWith('local', {
           data: {
             email: this.email,
             password: this.password,
           },
         })
-        .then(
-          (response) => {
-            return response
-          },
-          (error) => {
-            return error
-          }
-        )
+        .then((res) => {
+          this.$auth.setUser(res.data.data)
+          alert('ログインしました')
+        })
+        .catch(() => {
+          alert('メールアドレスかパスワードが間違えています')
+        })
     },
   },
 }
