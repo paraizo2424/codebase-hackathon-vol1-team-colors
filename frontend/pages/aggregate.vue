@@ -46,21 +46,34 @@
           </div>
         </div>
         <div class="mt-4 flex">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            class="h-4 w-4"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-          <span>勉強項目を追加する</span>
+          <div>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              class="h-4 w-4"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <span>勉強項目を追加する</span>
+          </div>
+
+          <div class="mt-16 flex">
+            <a
+              :href="`https://twitter.com/intent/tweet?text=今日は${today.hour}時間${today.minute}分勉強しましたhttps://colors.sample@colors`"
+              target="_blank"
+              ><img
+                src="../static/images/default.jpeg"
+                alt="みんなのつぶやき"
+              /><br />進捗をつぶやく
+            </a>
+          </div>
         </div>
       </div>
       <div class="w-1/2">
@@ -104,10 +117,19 @@ export default {
   },
   data() {
     return {
-      info: null,
       labels: [],
+      today: {
+        hour: 1,
+        minute: 1,
+      },
       data: [],
       subjects: [
+        {
+          class: 'devicon-html5-plain-wordmark',
+          item: 'html5',
+          hour: 0,
+          minutes: 0,
+        },
         {
           class: 'devicon-css3-plain-wordmark',
           item: 'css3',
