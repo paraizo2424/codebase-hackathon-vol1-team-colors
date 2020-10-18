@@ -68,12 +68,13 @@
               name="selected-mode"
               value="paint"
             />
-            <label for="paint-mode">
+            <label for="paint-mode" @click="paintClick()">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
+                :class="{ 'text-red-700': isPaintActive }"
               >
                 <path
                   stroke-linecap="round"
@@ -92,12 +93,13 @@
               name="selected-mode"
               value="eraser"
             />
-            <label for="eraser-mode">
+            <label for="eraser-mode" @click="trashClick()">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
+                :class="{ 'text-red-700': isTrashActive }"
               >
                 <path
                   stroke-linecap="round"
@@ -115,18 +117,23 @@
         <div class="flex">
           <div class="flex-1 text-center border-solid border-4 text-xl">
             <div v-for="subject in subjects" :key="subject.id" class="my-2">
+              <input
+                :id="subject.name"
+                v-model="checkedSubject"
+                type="radio"
+                name="checked-subject"
+                :value="subject"
+                class="subject"
+              />
+
               <label :for="subject.name">
-                <div>
-                  <input
-                    :id="subject.name"
-                    v-model="checkedSubject"
-                    type="radio"
-                    name="checked-subject"
-                    :value="subject"
-                  />
-                  <i class="devicon-html5-plain-wordmark colored"></i
-                  >{{ subject.name }}
-                </div>
+                <img
+                  :src="subject.logo"
+                  width="20"
+                  :alt="subject.name"
+                  style="display: inline-block;"
+                />
+                {{ subject.name }}
               </label>
             </div>
           </div>
@@ -159,6 +166,9 @@ export default {
       today: new Date(),
       currentPage: 1,
       totalPages: 1,
+      isPaintActive: false,
+      isTrashActive: false,
+      isSubjectActive: {},
     }
   },
   computed: {
@@ -258,6 +268,8 @@ export default {
     },
 
     startOrStop() {
+      this.isPaintActive = false
+      this.isTrashActive = false
       if (this.checkedSubject !== '') {
         this.timerOnOff = !this.timerOnOff
         if (this.timerOnOff) {
@@ -269,7 +281,20 @@ export default {
         }
       }
     },
-
+    paintClick() {
+      this.timerOnOff = false
+      this.stop()
+      this.timerColor = 'black'
+      this.isPaintActive = true
+      this.isTrashActive = false
+    },
+    trashClick() {
+      this.timerOnOff = false
+      this.stop()
+      this.timerColor = 'black'
+      this.isPaintActive = false
+      this.isTrashActive = true
+    },
     paint(square) {
       if (this.paintMode === 'paint') {
         if (square.color.length === 0 && this.checkedSubject !== '') {
@@ -368,4 +393,14 @@ export default {
   },
 }
 </script>
-<style></style>
+<style>
+input[type='radio'] {
+  display: none;
+}
+.subject:checked + label {
+  @apply border-dashed;
+  @apply border-4;
+  @apply border-red-700;
+  @apply px-5 py-2;
+}
+</style>
