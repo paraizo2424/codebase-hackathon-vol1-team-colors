@@ -20,10 +20,20 @@ end
 
 subjects = ["HTML5", "CSS3", "JavaScript", "Ruby", "Sinatra", "Ruby on Rails", "サイト制作"]
 colors = ["Orange", "Blue", "Yellow", "Red", "Gray", "#3366ff", "Green"]
-subjects.zip(colors) do |subject, color|
+logos = [
+  "https://cdn.svgporn.com/logos/html-5.svg",
+  "https://cdn.svgporn.com/logos/css-3.svg",
+  "https://cdn.svgporn.com/logos/javascript.svg",
+  "https://cdn.svgporn.com/logos/ruby.svg",
+  "https://cdn.svgporn.com/logos/sinatra.svg",
+  "https://cdn.svgporn.com/logos/rails.svg",
+  "https://cdn.svgporn.com/logos/codeschool.svg",
+]
+logos.zip(subjects, colors) do |logo, subject, color|
     Subject.create!(
-        name: subject,
-        color: color
+      logo: logo,
+      name: subject,
+      color: color,
     )
 end
 
