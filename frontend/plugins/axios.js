@@ -6,12 +6,12 @@ export default function ({ $axios }) {
     config.headers['token-type'] = window.localStorage.getItem('token-type')
   })
 
-  $axios.onResponse((response) => {
-    if (response.headers.client) {
-      localStorage.setItem('access-token', response.headers['access-token'])
-      localStorage.setItem('client', response.headers.client)
-      localStorage.setItem('uid', response.headers.uid)
-      localStorage.setItem('token-type', response.headers['token-type'])
+  $axios.onResponse((res) => {
+    if (res.headers.client) {
+      localStorage.setItem('access-token', res.headers['access-token'])
+      localStorage.setItem('client', res.headers.client)
+      localStorage.setItem('uid', res.headers.uid)
+      localStorage.setItem('token-type', res.headers['token-type'])
     }
   })
 }

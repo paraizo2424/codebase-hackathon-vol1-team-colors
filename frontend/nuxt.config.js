@@ -78,28 +78,36 @@ export default {
    */
   axios: {
     baseURL: process.env.BACKEND_API || 'http://localhost:8000',
-    axios: {},
+  },
 
-    auth: {
-      redirect: {
-        login: '/login',
-        logout: 'login',
-        callback: false,
-        home: '/',
-      },
-      strategies: {
-        local: {
-          endpoints: {
-            login: { url: '/auth/sign_in', method: 'post', propertyName: false },
-            logout: false,
-            user: false,
+  auth: {
+    redirect: {
+      login: '/login',
+      logout: '/login',
+      callback: false,
+      home: '/',
+    },
+    strategies: {
+      local: {
+        endpoints: {
+          login: {
+            url: '/auth/sign_in',
+            method: 'post',
+            propertyName: 'login',
           },
+          logout: {
+            url: 'auth/sign_out',
+            method: 'delete',
+            propertyName: false,
+          },
+          user: false,
         },
       },
     },
-    /*
-     ** Build configuration
-     ** See https://nuxtjs.org/api/configuration-build/
-     */
-    build: {},
-  }
+  },
+  /*
+   ** Build configuration
+   ** See https://nuxtjs.org/api/configuration-build/
+   */
+  build: {},
+}
