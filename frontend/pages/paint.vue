@@ -137,16 +137,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-// nuxt/dotenvの導入 #46のイシューで解決している部分
-// だと思うが、先に進めるためにいったんpushします^^;
-axios.defaults.baseURL = 'http://localhost:8000'
-axios.defaults.headers.common = {
-  'access-token': 'V6PqcGl3PrSFt3unZcGSNg',
-  client: '9yW0kZSM3ISuVuCiInlBlA',
-  uid: 'sample@sample.com',
-}
-
 const timerType = 1
 const paintType = 2
 
@@ -191,7 +181,7 @@ export default {
     },
   },
   mounted() {
-    axios
+    this.$axios
       .get('/studied_records')
       .then((response) => {
         window.console.log(response)
@@ -243,7 +233,7 @@ export default {
         this.squares[endSquareId].studied_type = reqData.type
         this.squares[endSquareId].date = reqData.date
 
-        axios
+        this.$axios
           .post('/studied_records', reqData)
           .then(function (response) {
             window.console.log(response)
@@ -304,7 +294,7 @@ export default {
               '-' +
               this.today.getDate()
 
-            axios
+            this.$axios
               .post('/studied_records', reqData)
               .then(function (response) {
                 window.console.log(response)
@@ -323,7 +313,7 @@ export default {
               '-' +
               this.today.getDate()
 
-            axios
+            this.$axios
               .post('/studied_records', reqData)
               .then(function (response) {
                 window.console.log(response)
@@ -348,7 +338,7 @@ export default {
             square.date = ''
             square.note = ''
 
-            axios
+            this.$axios
               .delete('/studied_records', reqData)
               .then(function (response) {
                 window.console.log(response)
@@ -363,7 +353,7 @@ export default {
             square.date = ''
             square.note = ''
 
-            axios
+            this.$axios
               .delete('/studied_records', reqData)
               .then(function (response) {
                 window.console.log(response)
