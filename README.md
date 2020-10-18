@@ -32,3 +32,6 @@ yarn install
 yarn dev
 ```
 [localhost:3000](localhost:3000)
+
+# メンバー
+西島本、松下、宮城、藤江
